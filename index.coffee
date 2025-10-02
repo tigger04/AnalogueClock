@@ -1,4 +1,5 @@
-# Begin of styling options
+# Übersicht widget for Analogue Clock
+# Tadhg Paul https://tigger.dev
 
 options =
   pos:
@@ -15,7 +16,7 @@ options =
     length: 230  # calculated dynamically
   minPtr:
     color: "rgb(120,166,214, 10%)" # css color string
-    width: 10     # in px
+    width: 15     # in px
     lengthPercent: 55 # length as % of clock diameter
     length: 184   # calculated dynamically
   hrPtr:
@@ -42,6 +43,49 @@ options =
     borderWidth: 0 # border width in px  
     borderColor: "rgba(0,0,0,0%)" # disc background color
     blur: 3 # disc blur amount in px, set to 0 to disable
+  dateCenter:
+    enabled: true # show date in center
+    fontSize: 44 # font size in px
+    color: "rgba(60%, 60%, 80%, 75%)" # text color
+    backgroundColor: "rgba(0, 0, 0, 40%)" # background circle color
+    borderColor: "rgba(255, 255, 255, 20%)" # border color
+    borderWidth: 0 # border width in px
+    discSizePercent: 15 # size of center disc as % of clock size
+    fontFamily: "monospace" # font family
+    fontWeight: 300 # font weight
+    textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)" # text shadow for legibility
+    textStroke: 0 # text stroke width in px (0 to disable)
+    textStrokeColor: "rgba(0, 0, 0, 0.8)" # text stroke color
+  dayOnMinute:
+    enabled: true # show day of week on minute hand
+    fontSize: 14 # font size in px
+    color: "rgba(80%, 50%, 50%, 60%)" # text color
+    backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
+    borderRadius: 8 # border radius in px
+    padding: 4 # padding in px
+    offsetPercent: 60 # position along minute hand as % from center
+    fontFamily: "monospace" # font family
+    fontWeight: 500 # font weight
+    textShadow: "0 1px 1px rgba(0, 0, 0, 60%)" # text shadow for legibility
+    textStroke: 0 # text stroke width in px (0 to disable)
+    textStrokeColor: "rgba(0, 0, 0, 60%)" # text stroke color
+    allCaps: true # display day name in all capitals
+    stretchFactor: 1.8 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
+  monthOnHour:
+    enabled: true # show month on hour hand
+    fontSize: 20 # font size in px
+    color: "rgba(60%, 60%, 60%, 30%)" # text color
+    backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
+    borderRadius: 0 # border radius in px
+    padding: 0 # padding in px
+    offsetPercent: 60 # position along hour hand as % from center
+    fontFamily: "monospace" # font family
+    fontWeight: 500 # font weight
+    textShadow: "0 1px 1px rgba(0, 0, 0, 40%)" # text shadow for legibility
+    textStroke: 0 # text stroke width in px (0 to disable)
+    textStrokeColor: "rgba(0, 0, 0, 40%)" # text stroke color
+    allCaps: true # display month name in all capitals
+    stretchFactor: 1.3 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
 
 refreshFrequency: "30s" # change this as well when changing the intervalLength
 
@@ -53,9 +97,16 @@ render: (_) -> """
   <div class="disc"></div>
   <div class="markers"></div>
   <div class="halfDisp">am</div>
-  <div class="hrPtr"></div>
-  <div class="minPtr"></div>
+  <div class="hrPtr">
+    <div class="monthLabel"></div>
+  </div>
+  <div class="minPtr">
+    <div class="dayLabel"></div>
+  </div>
   <div class="secPtr"></div>
+  <div class="dateCenter">
+    <div class="dateText"></div>
+  </div>
 </div>
 """
 
@@ -176,6 +227,112 @@ updateElementStyles: (domEl) ->
     padding: "0px #{10 * options.scale}px"
     'font-size': "#{options.fontSize * options.scale}px"
   
+  # Update date center styling
+  if options.dateCenter.enabled
+    dateCenterSize = size * options.dateCenter.discSizePercent / 100
+    div.find('.dateCenter').css
+      width: "#{dateCenterSize}px"
+      height: "#{dateCenterSize}px"
+      top: "#{(size - dateCenterSize) / 2}px"
+      left: "#{(size - dateCenterSize) / 2}px"
+      'background-color': options.dateCenter.backgroundColor
+      'border-width': "#{options.dateCenter.borderWidth * options.scale}px"
+      'border-color': options.dateCenter.borderColor
+      'border-radius': "50%"
+      'border-style': 'solid'
+      'display': 'flex'
+      'align-items': 'center'
+      'justify-content': 'center'
+    
+    dateTextStyles =
+      'font-size': "#{options.dateCenter.fontSize * options.scale}px"
+      'color': options.dateCenter.color
+      'font-family': options.dateCenter.fontFamily
+      'font-weight': options.dateCenter.fontWeight
+      'text-align': 'center'
+      'line-height': '1'
+      'text-shadow': options.dateCenter.textShadow
+    
+    # Add text stroke if enabled
+    if options.dateCenter.textStroke > 0
+      dateTextStyles['-webkit-text-stroke'] = "#{options.dateCenter.textStroke * options.scale}px #{options.dateCenter.textStrokeColor}"
+    
+    div.find('.dateText').css(dateTextStyles)
+  else
+    div.find('.dateCenter').css('display', 'none')
+  
+  # Update day label on minute hand
+  if options.dayOnMinute.enabled
+    dayOffset = minLength * options.dayOnMinute.offsetPercent / 100
+    labelWidth = 80
+    labelHeight = options.dayOnMinute.fontSize * options.scale + (options.dayOnMinute.padding * options.scale * 2)
+    dayLabelStyles = 
+      position: 'absolute'
+      left: "#{dayOffset - labelWidth / 2}px" # center horizontally on the offset position
+      top: "#{options.minPtr.width * options.scale / 2 - labelHeight / 2}px" # center on the middle of the hand thickness
+      width: "#{labelWidth}px"
+      'font-size': "#{options.dayOnMinute.fontSize * options.scale}px"
+      'color': options.dayOnMinute.color
+      'background-color': options.dayOnMinute.backgroundColor
+      'border-radius': "#{options.dayOnMinute.borderRadius * options.scale}px"
+      'padding': "#{options.dayOnMinute.padding * options.scale}px"
+      'font-family': options.dayOnMinute.fontFamily
+      'font-weight': options.dayOnMinute.fontWeight
+      'text-align': 'center'
+      'line-height': '1.2'
+      'white-space': 'nowrap'
+      'text-shadow': options.dayOnMinute.textShadow
+      'box-sizing': 'border-box'
+    
+    # Add stretch factor transform
+    if options.dayOnMinute.stretchFactor != 1.0
+      dayLabelStyles['transform'] = "scaleX(#{options.dayOnMinute.stretchFactor})"
+      dayLabelStyles['transform-origin'] = 'center'
+    
+    # Add text stroke if enabled
+    if options.dayOnMinute.textStroke > 0
+      dayLabelStyles['-webkit-text-stroke'] = "#{options.dayOnMinute.textStroke * options.scale}px #{options.dayOnMinute.textStrokeColor}"
+    
+    div.find('.dayLabel').css(dayLabelStyles)
+  else
+    div.find('.dayLabel').css('display', 'none')
+  
+  # Update month label on hour hand
+  if options.monthOnHour.enabled
+    monthOffset = hrLength * options.monthOnHour.offsetPercent / 100
+    labelWidth = 100
+    labelHeight = options.monthOnHour.fontSize * options.scale + (options.monthOnHour.padding * options.scale * 2)
+    monthLabelStyles =
+      position: 'absolute'
+      left: "#{monthOffset - labelWidth / 2}px" # center horizontally on the offset position
+      top: "#{options.hrPtr.width * options.scale / 2 - labelHeight / 2}px" # center on the middle of the hand thickness
+      width: "#{labelWidth}px"
+      'font-size': "#{options.monthOnHour.fontSize * options.scale}px"
+      'color': options.monthOnHour.color
+      'background-color': options.monthOnHour.backgroundColor
+      'border-radius': "#{options.monthOnHour.borderRadius * options.scale}px"
+      'padding': "#{options.monthOnHour.padding * options.scale}px"
+      'font-family': options.monthOnHour.fontFamily
+      'font-weight': options.monthOnHour.fontWeight
+      'text-align': 'center'
+      'line-height': '1.2'
+      'white-space': 'nowrap'
+      'text-shadow': options.monthOnHour.textShadow
+      'box-sizing': 'border-box'
+    
+    # Add stretch factor transform
+    if options.monthOnHour.stretchFactor != 1.0
+      monthLabelStyles['transform'] = "scaleX(#{options.monthOnHour.stretchFactor})"
+      monthLabelStyles['transform-origin'] = 'center'
+    
+    # Add text stroke if enabled
+    if options.monthOnHour.textStroke > 0
+      monthLabelStyles['-webkit-text-stroke'] = "#{options.monthOnHour.textStroke * options.scale}px #{options.monthOnHour.textStrokeColor}"
+    
+    div.find('.monthLabel').css(monthLabelStyles)
+  else
+    div.find('.monthLabel').css('display', 'none')
+  
   # Recalculate marker lengths based on current size
   majorLength = options.size * options.majorMarker.lengthPercent / 100 * options.scale
   minorLength = options.size * options.minorMarker.lengthPercent / 100 * options.scale
@@ -209,6 +366,25 @@ update: (_, domEl) ->
 
   div = $(domEl)
   pointers = div.find('.secPtr, .minPtr, .hrPtr')
+
+  # Update date information
+  dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  
+  if options.dateCenter.enabled
+    div.find('.dateText').text(now.getDate())
+  
+  if options.dayOnMinute.enabled
+    dayText = dayNames[now.getDay()]
+    if options.dayOnMinute.allCaps
+      dayText = dayText.toUpperCase()
+    div.find('.dayLabel').text(dayText)
+  
+  if options.monthOnHour.enabled
+    monthText = monthNames[now.getMonth()]
+    if options.monthOnHour.allCaps
+      monthText = monthText.toUpperCase()
+    div.find('.monthLabel').text(monthText)
 
   # Set the rotation of the pointers to what they should be at the current time
   # (without transition, to prevent the pointer from rotating backwards around the beginning of the day)
@@ -343,4 +519,20 @@ pointer-events: none
   height: #{options.minorMarker.width * options.scale}px
   background-color: #{options.minorMarker.color}
   transform-origin: #{(-options.size / 2 + options.minorMarker.length + options.markerOffset) * options.scale}px 50%
+
+.dateCenter
+  position: absolute
+  border-radius: 50%
+  box-sizing: border-box
+  z-index: 10
+  pointer-events: none
+
+.dateText
+  pointer-events: none
+
+.dayLabel, .monthLabel
+  position: absolute
+  box-sizing: border-box
+  pointer-events: none
+  transform-origin: center
 """

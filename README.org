@@ -7,7 +7,7 @@
 
 An Übersicht widget for macOS that displays an analogue clock on the desktop. Written in CoffeeScript, it provides a translucent analogue clock with customizable appearance and smooth animations.
 
-[[screenshot.png]]
+[[ss01.png]]
 
 Based on [[https://github.com/ruurd/SmoothAnalogClock.widget][SmoothAnalogClock.widget]] by ruurd, with a few tweaks.
 
@@ -44,6 +44,17 @@ secPtr:
   width: 2                       # Width in pixels
   lengthPercent: 90             # Length as % of clock diameter
 #+END_SRC
+
+** Date Display Functions *(Experimental)*
+
+[[ss02.png]]
+
+The clock can optionally display date information:
+- *Center*: Numeric date (1-31) in a circle at the clock center
+- *Minute Hand*: Day of week (e.g., "Wednesday") that rotates with the minute hand
+- *Hour Hand*: Month name (e.g., "October") that rotates with the hour hand
+
+Configure via =dateCenter=, =dayOnMinute=, and =monthOnHour= sections in the options. Text styling includes shadows, outlines, capitalization, and stretch factors. Set =enabled: false= to disable any element.
 
 ** Clock Face & Markers
 
