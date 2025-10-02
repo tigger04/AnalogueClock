@@ -1,0 +1,123 @@
+#+TITLE: AnalogueClock.widget
+#+AUTHOR: Taḋg Paul  
+#+DATE: 2025
+#+DESCRIPTION: A customizable analogue clock widget for macOS desktop
+
+* Overview
+
+An Übersicht widget for macOS that displays an analogue clock on the desktop. Written in CoffeeScript, it provides a translucent analogue clock with customizable appearance and smooth animations.
+
+Based on [[https://github.com/ruurd/SmoothAnalogClock.widget][SmoothAnalogClock.widget]] by ruurd, with a few tweaks.
+
+A few tweaks from =ruurd='s SmoothAnalogClock:
+- Proportional sizing based on screen dimensions
+- Proportional clock hand lengths
+- Mouse click-through
+
+* Requirements
+- [[https://tracesof.net/uebersicht/][Übersicht]] - Customizeable desktop widget system for macOS (allows CoffeeScript/JavaScript/CSS based widgets)
+
+* Installation
+1. [[https://tracesof.net/uebersicht/][Übersicht]] if not already installed
+2. Download or clone this repository within your widgets directory
+
+* Configuration
+Config options at the top of =index.coffee=
+
+** Position & Size
+
+#+BEGIN_SRC coffeescript
+pos:
+  x: "left: 35%"      # Horizontal position
+  y: "bottom: 20%"    # Vertical position
+sizePercent: 30       # Clock size as % of screen width
+#+END_SRC
+
+** Clock Hands (Pointers)
+
+*** Hour (hrPtr), Minute (minPtr), Second (secPtr) Hands
+#+BEGIN_SRC coffeescript
+secPtr:
+  color: "rgba(209,97,143,35%)"  # Color with transparency
+  width: 2                       # Width in pixels
+  lengthPercent: 90             # Length as % of clock diameter
+#+END_SRC
+
+** Clock Face & Markers
+
+*** Hour, minute markers
+#+BEGIN_SRC coffeescript
+majorMarker:
+  colour: "rgba(200, 200, 200, 30%)"
+  width: 7
+  lengthPercent: 8
+minorMarker:
+  colour: "rgba(200, 200, 200, 25%)"
+  width: 1
+  lengthPercent: 2
+#+END_SRC
+
+** Background & Visual Effects
+
+*** Clock Disc
+#+BEGIN_SRC coffeescript
+disc:
+  sizePercent: 90                    # Size relative to overall clock
+  colour: "rgba(0, 0, 0, 15%)"       # Background colour
+  borderWidth: 0                     # Border thickness
+  borderColor: "rgba(0,0,0,0%)"     # Border colour
+  blur: 3                           # Backdrop blur amount
+#+END_SRC
+
+*** Background Blur
+#+BEGIN_SRC coffeescript
+backgroundBlur: 0  # Circular blur area (0 to disable)
+#+END_SRC
+
+** Timing & Animation
+
+#+BEGIN_SRC coffeescript
+intervalLength: 30        # Transition interval in seconds
+refreshFrequency: "30s"   # Widget refresh rate
+#+END_SRC
+
+*Note:* =refreshFrequency= should match =intervalLength= for optimal performance.
+
+* Technical Details
+
+** Architecture
+
+The widget is structured with the following key components:
+
+- =render()= - Defines the HTML structure
+- =afterRender()= - Initializes dynamic sizing and marker generation
+- =updateElementStyles()= - Handles responsive styling and scaling
+- =update()= - Manages time calculation and smooth pointer transitions
+- =style= - Contains all CSS styling with dynamic values
+
+** Minimal Transparent Clock
+#+BEGIN_SRC coffeescript
+sizePercent: 20
+disc:
+  colour: "rgba(0, 0, 0, 0%)"  # Fully transparent
+backgroundBlur: 0
+#+END_SRC
+
+** High-Contrast Clock
+#+BEGIN_SRC coffeescript
+secPtr:
+  colour: "rgb(255, 0, 0)"
+minPtr:
+  colour: "rgb(0, 0, 255)"
+hrPtr:
+  colour: "rgb(0, 0, 0)"
+disc:
+  colour: "rgba(255, 255, 255, 80%)"
+#+END_SRC
+
+* License
+
+MIT
+
+Copyright © 2025 Taḋg Paul
+Credit to =ruurd= for the original SmoothAnalogClock.widget.
