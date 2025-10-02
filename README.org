@@ -7,6 +7,8 @@
 
 An Übersicht widget for macOS that displays an analogue clock on the desktop. Written in CoffeeScript, it provides a translucent analogue clock with customizable appearance and smooth animations.
 
+[[screenshot.png]]
+
 Based on [[https://github.com/ruurd/SmoothAnalogClock.widget][SmoothAnalogClock.widget]] by ruurd, with a few tweaks.
 
 A few tweaks from =ruurd='s SmoothAnalogClock:
