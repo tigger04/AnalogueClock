@@ -1,7 +1,7 @@
 #+TITLE: AnalogueClock.widget
 #+AUTHOR: Taḋg Paul  
 #+DATE: 2025-10-02
-#+DESCRIPTION: Customizeable analogue clock widget for macOS desktop
+#+DESCRIPTION: Customizable analogue clock widget for macOS desktop
 
 * Overview
 
@@ -15,7 +15,7 @@ A few tweaks from =ruurd='s SmoothAnalogClock:
 - Mouse click-through
 
 * Requirements
-- [[https://tracesof.net/uebersicht/][Übersicht]] - Customizeable desktop widget system for macOS (allows CoffeeScript/JavaScript/CSS based widgets)
+- [[https://tracesof.net/uebersicht/][Übersicht]] - Customizable desktop widget system for macOS (allows CoffeeScript/JavaScript/CSS based widgets)
 
 * Installation
 1. [[https://tracesof.net/uebersicht/][Übersicht]] if not already installed

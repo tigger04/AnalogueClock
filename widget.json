@@ -1,6 +1,5 @@
 {
-  "name": "Smooth Analog Clock",
-  "description": "A hardware accelerated analog clock with smooth running pointers",
-  "author": "ruurd",
-  "email": "ruurd@gmail.com"
+  "name": "Analogue Clock",
+  "description": "Customizable analogue clock widget",
+  "author": "Taḋg Paul"
 }
