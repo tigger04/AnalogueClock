@@ -15,12 +15,12 @@ options =
     lengthPercent: 90 # length as % of clock diameter
     length: 230  # calculated dynamically
   minPtr:
-    color: "rgb(120,166,214, 10%)" # css color string
+    color: "rgb(35%,45%,60%, 10%)" # css color string
     width: 15     # in px
     lengthPercent: 55 # length as % of clock diameter
     length: 184   # calculated dynamically
   hrPtr:
-    color: "rgb(120,166,214, 10%)" # css color string
+    color: "rgb(40%,40%,50%, 10%)" # css color string
     width: 20     # in px
     lengthPercent: 35 # length as % of clock diameter
     length: 128   # calculated dynamically
@@ -42,50 +42,53 @@ options =
     color: "rgba(0, 0, 0, 15%)" # disc background color
     borderWidth: 0 # border width in px  
     borderColor: "rgba(0,0,0,0%)" # disc background color
-    blur: 3 # disc blur amount in px, set to 0 to disable
+    blur: 5 # disc blur amount in px, set to 0 to disable
   dateCenter:
     enabled: true # show date in center
     fontSize: 44 # font size in px
-    color: "rgba(60%, 60%, 80%, 75%)" # text color
-    backgroundColor: "rgba(0, 0, 0, 40%)" # background circle color
+    color: "rgba(90%, 90%, 90%, 45%)" # text color
+    backgroundColor: "rgba(0, 0, 0, 5%)" # background circle color
     borderColor: "rgba(255, 255, 255, 20%)" # border color
     borderWidth: 0 # border width in px
-    discSizePercent: 15 # size of center disc as % of clock size
+    discSizePercent: 20 # size of center disc as % of clock size
     fontFamily: "monospace" # font family
     fontWeight: 300 # font weight
     textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 0.8)" # text stroke color
+    blur: 5
   dayOnMinute:
-    enabled: true # show day of week on minute hand
-    fontSize: 14 # font size in px
-    color: "rgba(80%, 50%, 50%, 60%)" # text color
+    enabled: false # show day of week on minute hand
+    fontSize: 16 # font size in px
+    color: "rgba(100%, 100%, 100%, 50%)" # text color
     backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
     borderRadius: 8 # border radius in px
     padding: 4 # padding in px
     offsetPercent: 60 # position along minute hand as % from center
     fontFamily: "monospace" # font family
     fontWeight: 500 # font weight
-    textShadow: "0 1px 1px rgba(0, 0, 0, 60%)" # text shadow for legibility
+    textShadow: "0 1px 1px rgba(0, 0, 0, 80%)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
-    textStrokeColor: "rgba(0, 0, 0, 60%)" # text stroke color
+    textStrokeColor: "rgba(0, 0, 0, 80%)" # text stroke color
     allCaps: true # display day name in all capitals
-    stretchFactor: 1.8 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
+    stretchFactor: 1.2 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
+    letterSpacing: 10 # letter spacing in px (0 = normal, positive = wider spacing, negative = tighter)
   monthOnHour:
-    enabled: true # show month on hour hand
+    enabled: false # show month on hour hand
     fontSize: 20 # font size in px
-    color: "rgba(60%, 60%, 60%, 30%)" # text color
+    color: "rgba(100%, 100%, 100%, 50%)" # text color
     backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
     borderRadius: 0 # border radius in px
-    padding: 0 # padding in px
+    padding: 4 # padding in px
     offsetPercent: 60 # position along hour hand as % from center
     fontFamily: "monospace" # font family
     fontWeight: 500 # font weight
-    textShadow: "0 1px 1px rgba(0, 0, 0, 40%)" # text shadow for legibility
+    textShadow: "0 1px 1px rgba(0, 0, 0, 80%)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
-    textStrokeColor: "rgba(0, 0, 0, 40%)" # text stroke color
+    textStrokeColor: "rgba(0, 0, 0, 80%)" # text stroke color
     allCaps: true # display month name in all capitals
-    stretchFactor: 1.3 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
+    stretchFactor: 1.1 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
+    letterSpacing: 2 # letter spacing in px (0 = normal, positive = wider spacing, negative = tighter)
 
 refreshFrequency: "30s" # change this as well when changing the intervalLength
 
@@ -230,7 +233,7 @@ updateElementStyles: (domEl) ->
   # Update date center styling
   if options.dateCenter.enabled
     dateCenterSize = size * options.dateCenter.discSizePercent / 100
-    div.find('.dateCenter').css
+    dateCenterStyles = 
       width: "#{dateCenterSize}px"
       height: "#{dateCenterSize}px"
       top: "#{(size - dateCenterSize) / 2}px"
@@ -243,6 +246,13 @@ updateElementStyles: (domEl) ->
       'display': 'flex'
       'align-items': 'center'
       'justify-content': 'center'
+    
+    # Add blur if enabled
+    if options.dateCenter.blur > 0
+      dateCenterStyles['-webkit-backdrop-filter'] = "blur(#{options.dateCenter.blur}px)"
+      dateCenterStyles['backdrop-filter'] = "blur(#{options.dateCenter.blur}px)"
+    
+    div.find('.dateCenter').css(dateCenterStyles)
     
     dateTextStyles =
       'font-size': "#{options.dateCenter.fontSize * options.scale}px"
@@ -269,7 +279,7 @@ updateElementStyles: (domEl) ->
     dayLabelStyles = 
       position: 'absolute'
       left: "#{dayOffset - labelWidth / 2}px" # center horizontally on the offset position
-      top: "#{options.minPtr.width * options.scale / 2 - labelHeight / 2}px" # center on the middle of the hand thickness
+      top: "#{-labelHeight / 4}px" # slight adjustment above center
       width: "#{labelWidth}px"
       'font-size': "#{options.dayOnMinute.fontSize * options.scale}px"
       'color': options.dayOnMinute.color
@@ -282,7 +292,11 @@ updateElementStyles: (domEl) ->
       'line-height': '1.2'
       'white-space': 'nowrap'
       'text-shadow': options.dayOnMinute.textShadow
+      'letter-spacing': "#{options.dayOnMinute.letterSpacing * options.scale}px"
       'box-sizing': 'border-box'
+      'display': 'flex'
+      'align-items': 'center'
+      'justify-content': 'center'
     
     # Add stretch factor transform
     if options.dayOnMinute.stretchFactor != 1.0
@@ -305,7 +319,7 @@ updateElementStyles: (domEl) ->
     monthLabelStyles =
       position: 'absolute'
       left: "#{monthOffset - labelWidth / 2}px" # center horizontally on the offset position
-      top: "#{options.hrPtr.width * options.scale / 2 - labelHeight / 2}px" # center on the middle of the hand thickness
+      top: "#{-labelHeight / 4}px" # slight adjustment above center
       width: "#{labelWidth}px"
       'font-size': "#{options.monthOnHour.fontSize * options.scale}px"
       'color': options.monthOnHour.color
@@ -318,7 +332,11 @@ updateElementStyles: (domEl) ->
       'line-height': '1.2'
       'white-space': 'nowrap'
       'text-shadow': options.monthOnHour.textShadow
+      'letter-spacing': "#{options.monthOnHour.letterSpacing * options.scale}px"
       'box-sizing': 'border-box'
+      'display': 'flex'
+      'align-items': 'center'
+      'justify-content': 'center'
     
     # Add stretch factor transform
     if options.monthOnHour.stretchFactor != 1.0
