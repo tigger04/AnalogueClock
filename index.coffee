@@ -46,14 +46,14 @@ options =
   dateCenter:
     enabled: true # show date in center
     fontSize: 44 # font size in px
-    color: "rgba(0%, 0%, 20%, 80%)" # text color
+    color: "rgba(60%, 60%, 60%, 80%)" # text color
     backgroundColor: "rgba(0, 0, 0, 45%)" # background circle color
     borderColor: "rgba(255, 255, 255, 20%)" # border color
     borderWidth: 0 # border width in px
     discSizePercent: 15 # size of center disc as % of clock size
     fontFamily: "monospace" # font family
     fontWeight: 300 # font weight
-    textShadow: "1px 1px 4px rgba(100%, 100%, 100%, 40%)" # text shadow for legibility 
+    textShadow: "1px 1px 4px rgba(20%, 20%, 20%, 40%)" # text shadow for legibility 
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 0.8)" # text stroke color
     blur: 5
@@ -67,7 +67,7 @@ options =
     offsetPercent: 60 # position along minute hand as % from center
     fontFamily: "monospace" # font family
     fontWeight: 500 # font weight
-    textShadow: "2px 2px 4px rgba(100%, 100%, 100%, 60%)" # text shadow for legibility
+    textShadow: "1px 1px 4px rgba(100%, 100%, 100%, 60%)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 80%)" # text stroke color
     allCaps: true # display day name in all capitals
@@ -83,7 +83,7 @@ options =
     offsetPercent: 60 # position along hour hand as % from center
     fontFamily: "monospace" # font family
     fontWeight: 500 # font weight
-    textShadow: "2px 2px 4px rgba(100%, 100%, 100%, 60%)" # text shadow for legibility
+    textShadow: "1px 1px 4px rgba(100%, 100%, 100%, 60%)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 80%)" # text stroke color
     allCaps: true # display month name in all capitals
