@@ -16,12 +16,12 @@ options =
     length: 230  # calculated dynamically
   minPtr:
     color: "rgb(35%,45%,60%, 10%)" # css color string
-    width: 15     # in px
-    lengthPercent: 60 # length as % of clock RADIUS
+    width: 16     # in px
+    lengthPercent: 58 # length as % of clock RADIUS
     length: 184   # calculated dynamically
   hrPtr:
     color: "rgb(40%,40%,50%, 10%)" # css color string
-    width: 20     # in px
+    width: 23     # in px
     lengthPercent: 35 # length as % of clock RADIUS
     length: 128   # calculated dynamically
   markerOffset: 4 # offset from the border of the clock in px
@@ -60,7 +60,7 @@ options =
   dayOnMinute:
     enabled: true # show day of week on minute hand
     fontSize: 16 # font size in px
-    color: "rgba(0%, 0%, 20%, 60%)" # text color
+    color: "rgba(0%, 0%, 0%, 80%)" # text color
     backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
     borderRadius: 8 # border radius in px
     padding: 4 # padding in px
