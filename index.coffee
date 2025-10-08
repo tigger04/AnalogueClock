@@ -12,33 +12,33 @@ options =
   secPtr:
     color: "rgba(209,97,143,35%)" # css color string
     width: 2     # in px
-    lengthPercent: 90 # length as % of clock diameter
+    lengthPercent: 100 # length as % of clock RADIUS
     length: 230  # calculated dynamically
   minPtr:
     color: "rgb(35%,45%,60%, 10%)" # css color string
     width: 15     # in px
-    lengthPercent: 55 # length as % of clock diameter
+    lengthPercent: 60 # length as % of clock RADIUS
     length: 184   # calculated dynamically
   hrPtr:
     color: "rgb(40%,40%,50%, 10%)" # css color string
     width: 20     # in px
-    lengthPercent: 35 # length as % of clock diameter
+    lengthPercent: 35 # length as % of clock RADIUS
     length: 128   # calculated dynamically
   markerOffset: 4 # offset from the border of the clock in px
   majorMarker:
-    color: "rgba(200, 200, 200, 30%)" # css color string for hour markers
-    width: 7      # in px
+    color: "rgba(80%, 80%, 80%, 50%)" # css color string for hour markers
+    width: 8 # in px
     lengthPercent: 8 # length as % of clock diameter
     length: 60    # calculated dynamically
   minorMarker:
-    color: "rgba(200, 200, 200, 25%)" # css color string for minute markers
-    width: 1      # in px
+    color: "rgba(80%, 80%, 80%, 50%)" # css color string for hour markers
+    width: 2      # in px
     lengthPercent: 2   # length as % of clock diameter
     length: 40    # calculated dynamically
   intervalLength: 30  # interval between the transition triggers in seconds
   backgroundBlur: 0 # circular blur area amount in px, set to 0 to disable
   disc:
-    sizePercent: 90 # disc size as % of overall clock size
+    sizePercent: 96 # disc size as % of overall clock size
     color: "rgba(0, 0, 0, 15%)" # disc background color
     borderWidth: 0 # border width in px  
     borderColor: "rgba(0,0,0,0%)" # disc background color
@@ -46,44 +46,44 @@ options =
   dateCenter:
     enabled: true # show date in center
     fontSize: 44 # font size in px
-    color: "rgba(90%, 90%, 90%, 45%)" # text color
-    backgroundColor: "rgba(0, 0, 0, 5%)" # background circle color
+    color: "rgba(0%, 0%, 20%, 80%)" # text color
+    backgroundColor: "rgba(0, 0, 0, 45%)" # background circle color
     borderColor: "rgba(255, 255, 255, 20%)" # border color
     borderWidth: 0 # border width in px
-    discSizePercent: 20 # size of center disc as % of clock size
+    discSizePercent: 15 # size of center disc as % of clock size
     fontFamily: "monospace" # font family
     fontWeight: 300 # font weight
-    textShadow: "0 2px 4px rgba(0, 0, 0, 0.8)" # text shadow for legibility
+    textShadow: "1px 1px 4px rgba(100%, 100%, 100%, 40%)" # text shadow for legibility 
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 0.8)" # text stroke color
     blur: 5
   dayOnMinute:
-    enabled: false # show day of week on minute hand
+    enabled: true # show day of week on minute hand
     fontSize: 16 # font size in px
-    color: "rgba(100%, 100%, 100%, 50%)" # text color
+    color: "rgba(0%, 0%, 20%, 60%)" # text color
     backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
     borderRadius: 8 # border radius in px
     padding: 4 # padding in px
     offsetPercent: 60 # position along minute hand as % from center
     fontFamily: "monospace" # font family
     fontWeight: 500 # font weight
-    textShadow: "0 1px 1px rgba(0, 0, 0, 80%)" # text shadow for legibility
+    textShadow: "2px 2px 4px rgba(100%, 100%, 100%, 60%)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 80%)" # text stroke color
     allCaps: true # display day name in all capitals
     stretchFactor: 1.2 # horizontal stretch factor (1.0 = normal, >1.0 = wider, <1.0 = narrower)
     letterSpacing: 10 # letter spacing in px (0 = normal, positive = wider spacing, negative = tighter)
   monthOnHour:
-    enabled: false # show month on hour hand
+    enabled: true # show month on hour hand
     fontSize: 20 # font size in px
-    color: "rgba(100%, 100%, 100%, 50%)" # text color
+    color: "rgba(0%, 0%, 20%, 60%)" # text color
     backgroundColor: "rgba(0, 0, 0, 0%)" # background color (more translucent)
     borderRadius: 0 # border radius in px
     padding: 4 # padding in px
     offsetPercent: 60 # position along hour hand as % from center
     fontFamily: "monospace" # font family
     fontWeight: 500 # font weight
-    textShadow: "0 1px 1px rgba(0, 0, 0, 80%)" # text shadow for legibility
+    textShadow: "2px 2px 4px rgba(100%, 100%, 100%, 60%)" # text shadow for legibility
     textStroke: 0 # text stroke width in px (0 to disable)
     textStrokeColor: "rgba(0, 0, 0, 80%)" # text stroke color
     allCaps: true # display month name in all capitals
