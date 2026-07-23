@@ -1,5 +1,5 @@
 #+TITLE: AnalogueClock.widget
-#+AUTHOR: Taḋg Paul  
+#+AUTHOR: Tadhg O'Brien  
 #+DATE: 2025-10-02
 #+DESCRIPTION: Customizable analogue clock widget for macOS desktop
 
@@ -132,6 +132,6 @@ disc:
 
 MIT License
 
-Copyright © 2025 Taḋg Paul
+Copyright © 2025 Tadhg O'Brien
 
 Credit to =ruurd= for the original SmoothAnalogClock.widget.
